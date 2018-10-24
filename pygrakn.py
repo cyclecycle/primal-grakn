@@ -10,30 +10,21 @@ class Graph():
     def __enter__(self, uri='localhost:48555', **kwargs):
         self.client = grakn.Grakn(uri=uri)
         self.session = self.client.session(keyspace='cognitive_impairment', **kwargs)
-        self.tx = self.session.transaction(grakn.TxType.READ)
+        self.tx = self.session.transaction(grakn.TxType.BATCH)
         return self
+
+    def commit(self):
+        self.tx.commit()
 
     def execute(self, query, **kwargs):
         answer_iterator = self.tx.query(query)
         data = []
-        for concept in answer_iterator.collect_concepts():
+        try:
+            answer = answer_iterator.collect_concepts()
+        except:
+            return []
+        for concept in answer:
             parsed = self.parse_concept(concept, **kwargs)
-            # base_type = concept.base_type
-            # if base_type == 'ATTRIBUTE':
-            #     parsed = self.parse_attribute(concept)
-            # elif base_type == 'ENTITY':
-            #     parsed = self.parse_entity(concept)
-            # elif base_type == 'RELATIONSHIP':
-            #     parsed = self.parse_relationship(concept)
-            # elif base_type == 'ROLE':
-            #     parsed = self.parse_role(concept)
-            # elif base_type == 'RELATIONSHIP_TYPE':
-            #     d = {
-            #         'id': concept.id,
-            #         'label': concept.label(),
-            #         'type': concept.base_type.lower(),
-            #         'roles': list(self.parse_roles(concept.roles())),
-            #     }
             data.append(parsed)
         return data
 
