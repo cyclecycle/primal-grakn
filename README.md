@@ -17,5 +17,9 @@ official python-grakn client:
 
 `pip install grakn`
 
+## Contribution
+
+Welcomed.
+
 
 

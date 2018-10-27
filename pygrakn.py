@@ -1,15 +1,19 @@
-import grakn
+import re
 from pprint import pprint
+import grakn
+
+
+MULTISPACE = re.compile(r'\s\s+')
 
 
 class Graph():
 
-    def __init__(self, **kwargs):
-        pass
+    def __init__(self, keyspace, **kwargs):
+        self.keyspace = keyspace
 
     def __enter__(self, uri='localhost:48555', **kwargs):
         self.client = grakn.Grakn(uri=uri)
-        self.session = self.client.session(keyspace='cognitive_impairment', **kwargs)
+        self.session = self.client.session(keyspace=self.keyspace, **kwargs)
         self.tx = self.session.transaction(grakn.TxType.BATCH)
         return self
 
@@ -17,6 +21,9 @@ class Graph():
         self.tx.commit()
 
     def execute(self, query, **kwargs):
+        query = query.replace('\n', ' ')
+        query = MULTISPACE.sub(' ', query)
+        print(query)
         answer_iterator = self.tx.query(query)
         data = []
         try:
@@ -116,6 +123,7 @@ class Graph():
 
     def __exit__(self, type, value, traceback):
         self.tx.close()
+        self.session.close()
 
 
 def remove_empty_keys(dict_):
