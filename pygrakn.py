@@ -10,12 +10,23 @@ class Graph():
 
     def __init__(self, keyspace, **kwargs):
         self.keyspace = keyspace
+        self.uri = kwargs.get('uri')
+        if not self.uri:
+            self.uri = 'localhost:48555'
 
-    def __enter__(self, uri='localhost:48555', **kwargs):
+    ''' Context management '''
+
+    def __enter__(self, uri=self.uri, **kwargs):
         self.client = grakn.Grakn(uri=uri)
         self.session = self.client.session(keyspace=self.keyspace, **kwargs)
         self.tx = self.session.transaction(grakn.TxType.BATCH)
         return self
+
+    def __exit__(self, type, value, traceback):
+        self.tx.close()
+        self.session.close()
+
+    ''' User functions '''
 
     def commit(self):
         self.tx.commit()
@@ -34,6 +45,8 @@ class Graph():
             parsed = self.parse_concept(concept, **kwargs)
             data.append(parsed)
         return data
+
+    ''' Parsing functions '''
 
     def parse_concept(self, concept, id_only=False, grakn_objs=False):
         if id_only:
@@ -121,9 +134,16 @@ class Graph():
         # print(concept)
         return d
 
-    def __exit__(self, type, value, traceback):
-        self.tx.close()
-        self.session.close()
+    ''' Convenience functions '''
+
+    def match_or_insert(self, query):
+        q = 'match {}; get;'.format(query)
+        q = q.replace(';;', ';')  # So it works regardless of whether user ends with semicolon
+        response = self.execute(q)
+        if not response:
+            q = 'insert {};'.format(query)
+            response = self.execute(q)
+        return response
 
 
 def remove_empty_keys(dict_):
