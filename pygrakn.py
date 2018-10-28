@@ -8,7 +8,7 @@ MULTISPACE = re.compile(r'\s\s+')
 
 class Graph():
 
-    def __init__(self, keyspace, **kwargs):
+    def __init__(self, keyspace=keyspace, **kwargs):
         self.keyspace = keyspace
         self.uri = kwargs.get('uri')
         if not self.uri:
@@ -16,8 +16,8 @@ class Graph():
 
     ''' Context management '''
 
-    def __enter__(self, uri=self.uri, **kwargs):
-        self.client = grakn.Grakn(uri=uri)
+    def __enter__(self, **kwargs):
+        self.client = grakn.Grakn(uri=self.uri)
         self.session = self.client.session(keyspace=self.keyspace, **kwargs)
         self.tx = self.session.transaction(grakn.TxType.BATCH)
         return self
