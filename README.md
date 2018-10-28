@@ -9,6 +9,19 @@ A simplified interface to [grakn](https://grakn.ai/) built on top of the officia
 - Some added conveniences such as match_or_insert function.
 - Still access underlying grakn objects if necessary.
 
+## Installation
+
+```bash
+git clone https://github.com/cyclecycle/pygrakn.git
+```
+
+### Requirements
+
+- Grakn running.
+- Official python-grakn client:
+
+    `pip install grakn`
+
 ## Usage
 
 ### Example
@@ -28,17 +41,9 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
 Name | Type | Description | Params
 --- | --- |--- | ---
 grakn.Graph | Class | Initiates the session. | uri, keyspace
-grakn.Graph.execute | Method | Executes a query. | graql query
-grakn.Graph.commit | Method | Commits the changes and ends the session. |
-grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | graql query without a 'match' or 'insert' statement, e.g, '$a isa animal has name \\"squirrel\\"'.
-
-## Requirements
-
-- Grakn running.
-- Official python-grakn client:
-
-    `pip install grakn`
-
+grakn.Graph.execute | Method | Executes a query. | graql query string
+grakn.Graph.commit | Method | Commits the changes and ends the session. | None
+grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | graql query string without a 'match' or 'insert' statement, e.g, '$a isa animal has name \\"squirrel\\"'.
 
 ## Contribution
 
