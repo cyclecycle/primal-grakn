@@ -8,16 +8,16 @@ MULTISPACE = re.compile(r'\s\s+')
 
 class Graph():
 
-    def __init__(self, keyspace=None, **kwargs):
+    def __init__(self, uri='localhost:48555', keyspace=None, credentials={}, **kwargs):
+        assert keyspace, 'Please provide keyspace'
         self.keyspace = keyspace
-        self.uri = kwargs.get('uri')
-        if not self.uri:
-            self.uri = 'localhost:48555'
+        self.uri = uri
+        self.credentials = credentials
 
     ''' Context management '''
 
     def __enter__(self, **kwargs):
-        self.client = grakn.Grakn(uri=self.uri)
+        self.client = grakn.Grakn(uri=self.uri, credentials=self.credentials)
         self.session = self.client.session(keyspace=self.keyspace, **kwargs)
         self.tx = self.session.transaction(grakn.TxType.BATCH)
         return self

@@ -38,10 +38,10 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
 
 Name | Type | Description | Params | Example
 --- | --- |--- | --- | ---
-grakn.Graph | Class | Initiates the session. | <ul><li>**kwarg** : uri : *string*</li><li>**kwarg** : keyspace : *string*</li></ul> |
+grakn.Graph | Class | Initiates the session. | <ul><li>**kwarg** : uri : *string* : Default='localhost:48555'</li><li>**kwarg** : keyspace : *string* : Default=None</li><li>**kwarg** : credentials : *dict* : Default={}</li></ul> |
 grakn.Graph.execute | Method | Executes a query. | <ul><li>**arg** : query : *string*</li><li>**kwarg** : grakn_objs : *boolean* : includes the underlying grakn object in the results : Default=False</li></ul> | execute('match $a isa animal', grakn_objs=True)
 grakn.Graph.commit | Method | Commits the changes and ends the session. | |
-grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | <ul><li>**arg** : query : *string* : graql query without a 'match' or 'insert' statement</li></ul> | match_or_insert('$a isa animal has name \\"squirrel\\";') 
+grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | <ul><li>**arg** : query : *string* : graql query without a prepended 'match' or 'insert' statement</li></ul> | match_or_insert('$a isa animal has name \\"squirrel\\";') 
 
 ### Installation
 
