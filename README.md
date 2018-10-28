@@ -35,6 +35,17 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
     query = 'insert $a isa animal has name \"squirrel\";'  # Escape your quotes, or use a raw string
     response = graph.execute(query)
     response = match.execute('match $a isa animal; get;')
+    print(response)
+        [{
+            'id': 'V4144',
+            'base_type': 'entity',
+            'type': 'animal',
+            'attributes': [{
+                'id': 'V4216',
+                'label': 'name',
+                'value': 'squirrel'
+            }]
+        }]
     graph.commit()  # Commit changes. N.B. this also closes the session
 ```
 

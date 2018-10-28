@@ -8,7 +8,7 @@ MULTISPACE = re.compile(r'\s\s+')
 
 class Graph():
 
-    def __init__(self, keyspace=keyspace, **kwargs):
+    def __init__(self, keyspace=None, **kwargs):
         self.keyspace = keyspace
         self.uri = kwargs.get('uri')
         if not self.uri:
