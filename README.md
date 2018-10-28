@@ -11,35 +11,38 @@ A simplified interface to [grakn](https://grakn.ai/) built on top of the officia
 
 ## Usage
 
+### Example
+
 ```python
 import pygrakn.pygrakn as grakn
 
 with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
-    response = graph.execute('insert $a isa animal has name \"squirrel\"';)  # Escape your quotes, or use a raw string
+    query = 'insert $a isa animal has name \"squirrel\";'  # Escape your quotes, or use a raw string
+    response = graph.execute(query)
     response = match.execute('match $a isa animal; get;')
     graph.commit()  # Commit changes. N.B. this also closes the session
 ```
 
-## Methods
+### API
 
 Name | Type | Description | Params
 --- | --- |--- | ---
 grakn.Graph | Class | Initiates the session. | uri, keyspace
-grakn.Graph.execute | Method | Executes a query | graql query
-grakn.Graph.commit | Method | Commits the changes and ends the session |
-grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | graql query without a 'match' or 'insert' statement, e.g, '$a isa animal has name \"squirrel\"'.
+grakn.Graph.execute | Method | Executes a query. | graql query
+grakn.Graph.commit | Method | Commits the changes and ends the session. |
+grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | graql query without a 'match' or 'insert' statement, e.g, '$a isa animal has name \\"squirrel\\"'.
 
 ## Requirements
 
-official python-grakn client:
+- Grakn running.
+- Official python-grakn client:
 
-`pip install grakn`
+    `pip install grakn`
 
-Grakn running.
 
 ## Contribution
 
-Welcomed.
+Welcome.
 
 
 
