@@ -9,20 +9,22 @@ A simplified interface to [grakn](https://grakn.ai/) built on top of the officia
 - Some added conveniences such as match_or_insert function.
 - Still access underlying grakn objects if necessary.
 
-## Installation
+## Usage
+
+### Installation
+
+#### Clone the repo
 
 ```bash
 git clone https://github.com/cyclecycle/pygrakn.git
 ```
 
-### Requirements
+#### Requirements
 
 - Grakn running.
 - Official python-grakn client:
 
     `pip install grakn`
-
-## Usage
 
 ### Example
 
