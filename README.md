@@ -11,7 +11,7 @@ A simplified interface to [grakn](https://grakn.ai/) built on top of the officia
 
 ## Usage
 
-python```
+```python
 import pygrakn.pygrakn as grakn
 
 with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
