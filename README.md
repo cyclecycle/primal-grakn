@@ -23,15 +23,15 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
     print(response)
         [{
             'id': 'V4144',
-            'base_type': 'entity',
             'type': 'animal',
+            'base_type': 'entity',
             'attributes': [{
                 'id': 'V4216',
                 'label': 'name',
                 'value': 'squirrel'
             }]
         }]
-    graph.commit()  # Commit changes. N.B. this also closes the session
+    graph.commit()  # Don't forget to commit changes. N.B. this also closes the session
 ```
 
 ### API
