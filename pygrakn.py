@@ -17,7 +17,10 @@ class Graph():
     ''' Context management '''
 
     def __enter__(self, **kwargs):
-        self.client = grakn.Grakn(uri=self.uri, credentials=self.credentials)
+        if self.credentials:
+            self.client = grakn.Grakn(uri=self.uri, credentials=self.credentials)
+        else:
+            self.client = grakn.Grakn(uri=self.uri)
         self.session = self.client.session(keyspace=self.keyspace, **kwargs)
         self.tx = self.session.transaction(grakn.TxType.BATCH)
         return self
