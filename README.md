@@ -38,10 +38,10 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
 
 Name | Type | Description | Params
 --- | --- |--- | ---
-grakn.Graph | Class | Initiates the session. | uri : string\nkeyspace : string
-grakn.Graph.execute | Method | Executes a query. | graql query string, grakn_objs boolean ()
+grakn.Graph | Class | Initiates the session. | uri - *string*<br>keyspace - *string*
+grakn.Graph.execute | Method | Executes a query. | graql query - *string*<br> grakn_objs - *boolean* - includes the underlying grakn object in the results.
 grakn.Graph.commit | Method | Commits the changes and ends the session. | None
-grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | graql query string without a 'match' or 'insert' statement, e.g, '$a isa animal has name \\"squirrel\\"'.
+grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | graql query - *string* - without a 'match' or 'insert' statement, e.g, '$a isa animal has name \\"squirrel\\"'.
 
 ### Installation
 
