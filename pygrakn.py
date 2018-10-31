@@ -35,9 +35,9 @@ class Graph():
         self.tx.commit()
 
     def execute(self, query, **kwargs):
+        query = query.replace(';;', ';')  # Double semicolon can occur if user provides semicolon to match_or_insert
         query = query.replace('\n', ' ')
         query = MULTISPACE.sub(' ', query)
-        print(query)
         answer_iterator = self.tx.query(query)
         data = []
         try:
@@ -61,11 +61,8 @@ class Graph():
         }
         if grakn_objs:
             d['obj'] = concept
-        # print(dir(concept))
         if hasattr(concept, 'label'):
             d['label'] = concept.label()
-        # if hasattr(concept, 'roles'):
-        #     d['roles'] = list(self.parse_roles(concept.roles(), players=False))
         if hasattr(concept, 'role_players'):
             d['relates'] = list(self.parse_role_players(concept.role_players_map()))
         if hasattr(concept, 'attributes'):
@@ -141,7 +138,6 @@ class Graph():
 
     def match_or_insert(self, query):
         q = 'match {}; get;'.format(query)
-        q = q.replace(';;', ';')  # So it works regardless of whether user ends with semicolon
         response = self.execute(q)
         if not response:
             q = 'insert {};'.format(query)
