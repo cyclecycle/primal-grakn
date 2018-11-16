@@ -2,6 +2,14 @@
 
 A simplified interface to [grakn](https://grakn.ai/) built on top of the official [grakn-python client](https://github.com/graknlabs/grakn/tree/master/client-python).
 
+## Why
+
+The [grakn-python client](https://github.com/graknlabs/grakn/tree/master/client-python) provides an exhaustive _extensively_ object oriented respresentation of a garkn response.
+
+As such, it requires a lot of code and recursion to get data.
+
+This project is an extension to provide convenience through enabling full parsing of result sets into python primitives.
+
 ## Features
 
 - Less code / boilerplate.
@@ -42,6 +50,10 @@ grakn.Graph | Class | Initiates the session. | <ul><li>**kwarg** : uri : *string
 grakn.Graph.execute | Method | Executes a query. | <ul><li>**arg** : query : *string*</li><li>**kwarg** : grakn_objs : *boolean* : includes the underlying grakn object in the results : Default=False</li></ul> | execute('match $a isa animal', grakn_objs=True)
 grakn.Graph.commit | Method | Commits the changes and ends the session. | |
 grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | <ul><li>**arg** : query : *string* : graql query without a prepended 'match' or 'insert' statement</li></ul> | match_or_insert('$a isa animal has name \\"squirrel\\";') 
+
+#### An explanation about explanations
+
+We parse 'Explanation' objects from the python grakn client into a flat, ordered list of assertions.
 
 ### Installation
 
