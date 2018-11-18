@@ -41,12 +41,32 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
 
 ### API
 
+#### primal_grakn.Graph
+
+| Name | Type | Description | Params | Example |
+| --- | --- |--- | --- | --- |
+| Graph | Class | Initiates the session. | <ul><li>**kwarg** : uri : *string* : Default='localhost:48555'</li><li>**kwarg** : keyspace : *string* : Default=None</li><li>**kwarg** : credentials : *dict* : Default={}</li></ul> |
+Graph.execute | Method | Executes a query. | <ul><li>**arg** : query : *string*</li></ul> | execute('match $a isa animal') |
+| Graph.commit | Method | Commits the changes and ends the session. | |
+| Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it. | <ul><li>**arg** : query : *string* : graql query without a prepended 'match' or 'insert' statement</li></ul> | match_or_insert('$a isa animal has name \\"squirrel\\";') 
+
+#### primal_grakn.ConceptDict
+
+Dictionary respresenation of a Grakn Concept object.
+
 Name | Type | Description | Params | Example
---- | --- |--- | --- | ---
-grakn.Graph | Class | Initiates the session. | <ul><li>**kwarg** : uri : *string* : Default='localhost:48555'</li><li>**kwarg** : keyspace : *string* : Default=None</li><li>**kwarg** : credentials : *dict* : Default={}</li></ul> |
-grakn.Graph.execute | Method | Executes a query. | <ul><li>**arg** : query : *string*</li></ul> | execute('match $a isa animal')
-grakn.Graph.commit | Method | Commits the changes and ends the session. | |
-grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it. | <ul><li>**arg** : query : *string* : graql query without a prepended 'match' or 'insert' statement</li></ul> | match_or_insert('$a isa animal has name \\"squirrel\\";') 
+| --- | --- | --- | --- | --- |
+| ConceptDict.object | Grakn Concept object | Corresponding grakn-python object |  |  |
+
+### An explanation about explanations
+
+At the time of writing, the explanation data structures Grakn provides are undocumented. Briefly, the Grakn ConceptMap object exposes the set of facts as a tree. The top level of this tree includes the inferred facts from the response, and the compositional facts are nested within deeper levels. 
+
+At present, we provide two structures to access these facts: one is .explanation, which is the explanation tree as it is exposed by grakn-python, parsed into the form of a python dictionary. The second is .flat_explanation, where the tree is flattened into a list. I found this much more convenient for my purposes, as it meant I could filter the list for only the types of concepts I was interested in for my explanation, and then sort the list into the logical order (Grakn does not provide any ordering in its explanation output).
+
+If you don't need information about the depth of inferences underlying your response, use .flat_explanation. 
+
+I feel this is an area where ripe for improvement both as regards the Grakn API and third party packages such as this.
 
 ### Installation
 
