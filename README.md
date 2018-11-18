@@ -1,35 +1,30 @@
-# pygrakn
+# primal-grakn
 
-A simplified interface to [grakn](https://grakn.ai/) built on top of the official [grakn-python client](https://github.com/graknlabs/grakn/tree/master/client-python).
-
-## Why
-
-The [grakn-python client](https://github.com/graknlabs/grakn/tree/master/client-python) provides an exhaustive _extensively_ object oriented respresentation of a garkn response.
-
-As such, it requires a lot of code and recursion to get data.
-
-This project is an extension to provide convenience through enabling full parsing of result sets into python primitives.
+A convenience wrapper around the official [grakn-python client](https://github.com/graknlabs/grakn/tree/master/client-python).
 
 ## Features
 
 - Less code / boilerplate.
-- Query results served as primitives (python lists / dicts etc.). Thus more immediately intelligble, accessable, and JSON-serialisable.
+- Response data looks and acts like primitive data structures (python lists / dicts etc.). Thus more immediately intelligble, accessable, and JSON-serialisable.
 - Some added conveniences such as match_or_insert function.
-- Still access underlying grakn objects if necessary.
+- Still access all underlying grakn-python client functionality where needed.
+
+## Why
+
+The [grakn-python client](https://github.com/graknlabs/grakn/tree/master/client-python) provides a complete and efficient object-oriented method of interaction with a Grakn instance. It can require a lot of code and recursion to get data. This extension aims to provide convenience through reducing code involved in connecting to Grakn and working with response data. It reflects a manner of working with Grakn through python that I have found to be preferrable.
 
 ## Usage
 
 ### Example
 
 ```python
-import pygrakn.pygrakn as grakn
+import primal_grakn.primal_grakn as grakn
 
 with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
     query = 'insert $a isa animal has name \"squirrel\";'  # Escape your quotes, or use a raw string
-    response = graph.execute(query)
-    response = match.execute('match $a isa animal; get;')
-    print(response)
-        [{
+    concept_map = graph.execute('match $a isa animal; get;')
+    print(concept_map)
+        {'a': {
             'id': 'V4144',
             'type': 'animal',
             'base_type': 'entity',
@@ -38,8 +33,10 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
                 'label': 'name',
                 'value': 'squirrel'
             }]
-        }]
-    graph.commit()  # Don't forget to commit changes. N.B. this also closes the session
+        }}
+    print(concept_map.object)  # Get the underlying ConceptMap object
+    print(concept_map['a'].object)  # Get the underlying Concept object
+    graph.commit()  # Don't forget to commit changes if you make them. N.B. this also closes the session
 ```
 
 ### API
@@ -47,13 +44,9 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
 Name | Type | Description | Params | Example
 --- | --- |--- | --- | ---
 grakn.Graph | Class | Initiates the session. | <ul><li>**kwarg** : uri : *string* : Default='localhost:48555'</li><li>**kwarg** : keyspace : *string* : Default=None</li><li>**kwarg** : credentials : *dict* : Default={}</li></ul> |
-grakn.Graph.execute | Method | Executes a query. | <ul><li>**arg** : query : *string*</li><li>**kwarg** : grakn_objs : *boolean* : includes the underlying grakn object in the results : Default=False</li></ul> | execute('match $a isa animal', grakn_objs=True)
+grakn.Graph.execute | Method | Executes a query. | <ul><li>**arg** : query : *string*</li></ul> | execute('match $a isa animal')
 grakn.Graph.commit | Method | Commits the changes and ends the session. | |
-grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it | <ul><li>**arg** : query : *string* : graql query without a prepended 'match' or 'insert' statement</li></ul> | match_or_insert('$a isa animal has name \\"squirrel\\";') 
-
-#### An explanation about explanations
-
-We parse 'Explanation' objects from the python grakn client into a flat, ordered list of assertions.
+grakn.Graph.match_or_insert | Method | Given a graql query string, match if it exists in the graph, or else insert it. | <ul><li>**arg** : query : *string* : graql query without a prepended 'match' or 'insert' statement</li></ul> | match_or_insert('$a isa animal has name \\"squirrel\\";') 
 
 ### Installation
 
@@ -70,9 +63,9 @@ git clone https://github.com/cyclecycle/pygrakn.git
 
     `pip install grakn`
 
-## Contribution
+## Contributions
 
-Welcome.
+Are welcome :)
 
 
 
