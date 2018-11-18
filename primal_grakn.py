@@ -137,7 +137,7 @@ class Graph():
         concept_maps = []
         for concept_map in answer_iterator:
             concept_map = ConceptMap(concept_map)
-            concept_map.append(concept_maps)
+            concept_maps.append(concept_map)
         return concept_maps
     # def parse_explanation_tree(self, concept_map, **kwargs):
     #     parsed = []

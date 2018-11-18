@@ -24,7 +24,7 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
     query = 'insert $a isa animal has name \"squirrel\";'  # Escape your quotes, or use a raw string
     concept_map = graph.execute('match $a isa animal; get;')
     print(concept_map)
-        {'a': {
+        [{'a': {
             'id': 'V4144',
             'type': 'animal',
             'base_type': 'entity',
@@ -33,7 +33,7 @@ with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
                 'label': 'name',
                 'value': 'squirrel'
             }]
-        }}
+        }}]
     print(concept_map.object)  # Get the underlying ConceptMap object
     print(concept_map['a'].object)  # Get the underlying Concept object
     graph.commit()  # Don't forget to commit changes if you make them. N.B. this also closes the session
