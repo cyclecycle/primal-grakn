@@ -20,10 +20,6 @@ class ConceptDict(dict):
         self.update(self.parse_concept(grakn_concept))
         # self.explanations = self.parse_explanation_tree()
 
-    # def __repr__(self):
-        # return '<pygrakn.pygrakn.Concept object>'
-        # return str
-
     def parse_concept(self, concept, grakn_objs=False):
         d = {
             'id': concept.id,
@@ -138,23 +134,11 @@ class Graph():
         query = query.replace('\n', ' ')
         query = MULTISPACE.sub(' ', query)
         answer_iterator = self.tx.query(query)
+        concept_maps = []
         for concept_map in answer_iterator:
             concept_map = ConceptMap(concept_map)
-            for k, v in concept_map.items():
-                print(k, v.object.is_inferred())
-            # pprint(concept_map.data)
-            # print()
-            # pprint(concept_map.all_data)
-        # data = []
-        # for concept_map in answer_iterator:
-        #     for k, v in concept_map.map().items():
-        #         parsed = self.parse_concept(v, **kwargs)
-        #         # explanation = self.get_explanation(concept_map, key=k)
-        #         explanations = self.parse_explanation_tree(concept_map, **kwargs)
-        #         # parsed['explanation'] = explanation
-        #         data.append({k: parsed})
-        # return data
-
+            concept_map.append(concept_maps)
+        return concept_maps
     # def parse_explanation_tree(self, concept_map, **kwargs):
     #     parsed = []
     #     for answer in concept_map.explanation().get_answers():
