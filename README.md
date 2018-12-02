@@ -71,18 +71,13 @@ If you don't need information about the depth of facts underlying the inferences
 
 ### Installation
 
-#### Clone the repo
-
 ```bash
-git clone https://github.com/cyclecycle/pygrakn.git
+pip install primal-grakn
 ```
 
 #### Requirements
 
 - Grakn running.
-- Official python-grakn client:
-
-    `pip install grakn`
 
 ## Contributions and improvements
 
