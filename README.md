@@ -5,8 +5,8 @@ A convenience wrapper around the official [grakn-python client](https://github.c
 ## Features
 
 - Less code / boilerplate.
-- Response data looks and acts like primitive data structures (python lists / dicts etc.). Thus more immediately intelligble, accessable, and JSON-serialisable.
-- Some added conveniences such as match_or_insert function.
+- Response data looks and acts like generic data structures (lists / dicts etc.). Thus more immediately intelligble, accessable, and JSON-serialisable.
+- Some added conveniences such as match_or_insert and explanation parsing.
 - Still access all underlying grakn-python client functionality where needed.
 
 ## Why
@@ -18,7 +18,7 @@ The [grakn-python client](https://github.com/graknlabs/grakn/tree/master/client-
 ### Example
 
 ```python
-import primal_grakn.primal_grakn as grakn
+import primal_grakn as grakn
 
 with grakn.Graph(uri='myuri', keyspace='mykeyspace') as graph:
     query = 'insert $a isa animal has name \"squirrel\";'  # Escape your quotes, or use a raw string
@@ -83,9 +83,11 @@ git clone https://github.com/cyclecycle/pygrakn.git
 
     `pip install grakn`
 
-## Contributions
+## Contributions and improvements
 
 Are welcome :)
+
+- The match_or_insert function could be improved to handle a broader number of cases. It's only set up for simple queries at the moment.
 
 
 

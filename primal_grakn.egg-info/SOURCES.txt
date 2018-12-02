@@ -1,0 +1,10 @@
+README.md
+setup.py
+primal_grakn/__init__.py
+primal_grakn/primal_grakn.py
+primal_grakn/test.py
+primal_grakn.egg-info/PKG-INFO
+primal_grakn.egg-info/SOURCES.txt
+primal_grakn.egg-info/dependency_links.txt
+primal_grakn.egg-info/requires.txt
+primal_grakn.egg-info/top_level.txt
