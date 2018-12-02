@@ -11,7 +11,7 @@ A convenience wrapper around the official [grakn-python client](https://github.c
 
 ## Why
 
-The [grakn-python client](https://github.com/graknlabs/grakn/tree/master/client-python) provides a complete and efficient object-oriented method of interaction with a Grakn instance. It can require a lot of code and recursion to get data. This extension aims to provide convenience through reducing code involved in connecting to Grakn and working with response data. It reflects a manner of working with Grakn through python that I have found to be preferrable.
+The [grakn-python client](https://github.com/graknlabs/grakn/tree/master/client-python) provides a complete and efficient object-oriented method of interaction with a Grakn instance. It can require a lot of code and recursion to get the data however. This extension aims to provide convenience through reducing code involved in connecting to Grakn and working with response data. It reflects a manner of working with Grakn through python that I have found to be preferrable.
 
 ## Usage
 
@@ -62,11 +62,12 @@ Name | Type | Description | Params | Example
 
 At the time of writing, the explanation data structures Grakn provides are undocumented. Briefly, the Grakn ConceptMap object exposes the set of facts as a tree. The top level of this tree includes the inferred facts from the response, and the compositional facts are nested within deeper levels. 
 
-At present, we provide two structures to access these facts: one is .explanation, which is the explanation tree as it is exposed by grakn-python, parsed into the form of a python dictionary. The second is .flat_explanation, where the tree is flattened into a list. I found this much more convenient for my purposes, as it meant I could filter the list for only the types of concepts I was interested in for my explanation, and then sort the list into the logical order (Grakn does not provide any ordering in its explanation output).
+At present, we provide two ways to access these facts:
 
-If you don't need information about the depth of inferences underlying your response, use .flat_explanation. 
+- `concept_map.explanation` - the explanation tree as it is exposed by grakn-python, parsed into the form of a python dictionary.
+- `concept_map.flat_explanation` - where the tree is flattened into a list. I found this much more convenient for my purposes, as it meant I could filter the list for only the types of concepts I was interested in for my explanation, and then sort the list into the logical order (Grakn does not provide any ordering in its explanation output), without recursion.
 
-I feel this is an area where ripe for improvement both as regards the Grakn API and third party packages such as this.
+If you don't need information about the depth of facts underlying the inferences in your response, use `.flat_explanation`. 
 
 ### Installation
 
